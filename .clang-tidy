@@ -1,10 +1,5 @@
 ---
 # clang-tidy for lsd_port
-#
-# Checks that are deliberately noisy or wrong for decompilation-derived C are
-# listed as negative patterns at the end of the list below.  Keep them inside
-# the Checks scalar: a `#` comment inside a YAML block scalar is literal text
-# and silently breaks the pattern it is attached to.
 
 Checks: >
   -*,
@@ -28,51 +23,35 @@ HeaderFilterRegex: '.*'
 FormatStyle: file
 
 CheckOptions:
-  # --- functions: lower_snake_case -----------------------------------------
-  # func_XXXXXXXX is the address-named placeholder carried over from the
-  # decompilation; it is allowed until the function is given a real name.
   - { key: readability-identifier-naming.FunctionCase, value: lower_case }
   - { key: readability-identifier-naming.FunctionIgnoredRegexp, value: '^func_[0-9A-Fa-f]+$' }
 
-  # --- parameters / arguments: PascalCase ("ThisCase") ---------------------
   - { key: readability-identifier-naming.ParameterCase, value: CamelCase }
   - { key: readability-identifier-naming.ParameterIgnoredRegexp, value: '^(argc|argv|envp)$' }
 
-  # --- locals: lower_snake_case -------------------------------------------
-  # `const` locals stay lower_snake_case too (only macros and file-scope
-  # constants are UPPER_CASE); e.g. `const int rc = ...`.
   - { key: readability-identifier-naming.LocalVariableCase, value: lower_case }
   - { key: readability-identifier-naming.LocalConstantCase, value: lower_case }
 
-  # --- globals: g_UPPER_CASE ----------------------------------------------
   - { key: readability-identifier-naming.GlobalVariableCase, value: UPPER_CASE }
   - { key: readability-identifier-naming.GlobalVariablePrefix, value: 'g_' }
   - { key: readability-identifier-naming.GlobalConstantCase, value: UPPER_CASE }
   - { key: readability-identifier-naming.GlobalConstantPrefix, value: 'g_' }
 
-  # --- members -------------------------------------------------------------
-  # Data members are m_PascalCase. Vtable slots are the callable interface and
-  # keep PascalCase (Destroy, OnNotify); the two fixed object-header fields
-  # `vtable` and `type_id` are exempt as well.
   - { key: readability-identifier-naming.MemberCase, value: CamelCase }
   - { key: readability-identifier-naming.MemberPrefix, value: 'm_' }
-  - { key: readability-identifier-naming.MemberIgnoredRegexp, value: '^([A-Z][A-Za-z0-9]*|vtable|type_id)$' }
+  - { key: readability-identifier-naming.MemberIgnoredRegexp, value: '^([A-Z][A-Za-z0-9]*|vtable|type_id|x|y|z)$' }
 
-  # --- types: lower_snake_case, typedefs end in _t -------------------------
   - { key: readability-identifier-naming.StructCase, value: lower_case }
   - { key: readability-identifier-naming.UnionCase, value: lower_case }
   - { key: readability-identifier-naming.EnumCase, value: lower_case }
   - { key: readability-identifier-naming.TypedefCase, value: lower_case }
   - { key: readability-identifier-naming.TypedefSuffix, value: '_t' }
-  # Short fixed-width aliases (s8/u32/f32/...) intentionally keep the
-  # decompilation's names; they are not required to end in _t.
+
   - { key: readability-identifier-naming.TypedefIgnoredRegexp, value: '^[su](8|16|32|64)$|^f(32|64)$' }
   - { key: readability-identifier-naming.EnumConstantCase, value: UPPER_CASE }
 
-  # --- constants and macros: UPPER_CASE -----------------------------------
   - { key: readability-identifier-naming.MacroDefinitionCase, value: UPPER_CASE }
 
-  # Short names are normal in this codebase (i, n, x, y); disable length noise.
   - { key: readability-identifier-length.MinimumVariableNameLength, value: 1 }
   - { key: readability-identifier-length.MinimumParameterNameLength, value: 1 }
   - { key: readability-identifier-length.MinimumLoopCounterNameLength, value: 1 }

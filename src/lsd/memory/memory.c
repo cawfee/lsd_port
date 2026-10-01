@@ -25,15 +25,16 @@ static void *g_MEMORY_MANAGER_PAD = NULL;
 static s32 g_MEMORY_LOCK = 0;
 
 memory_manager_t *memory_create_manager(u32 Size, s32 Unused) {
+    (void)Unused;
+
     long pool_size;
     memory_manager_t *manager;
-
-    (void)Unused;
 
     pool_size = Size;
     if (pool_size < 0x400U) {
         pool_size = 0x400;
     }
+
     pool_size = (long)((u32)pool_size & ~(MEM_ALIGN - 1U));
     manager = psyq_malloc_malloc(MEM_MANAGER_HEADER + pool_size + MEM_ALIGN);
     if (manager != NULL) {

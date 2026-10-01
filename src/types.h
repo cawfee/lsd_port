@@ -14,4 +14,9 @@ typedef uint64_t u64;
 typedef float f32;
 typedef double f64;
 
+typedef struct {
+    s32 x;
+    s32 y;
+} vec2d_t;
+
 #endif /* LSD_TYPES_H */
