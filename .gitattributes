@@ -1,0 +1,20 @@
+# Normalize line endings for a portable C project.
+* text=auto eol=lf
+
+*.c    text eol=lf
+*.h    text eol=lf
+*.inc  text eol=lf
+*.md   text eol=lf
+*.cmake text eol=lf
+CMakeLists.txt text eol=lf
+
+# Windows-only helper scripts, if any, keep CRLF.
+*.bat  text eol=crlf
+*.cmd  text eol=crlf
+
+# Binary assets.
+*.png  binary
+*.bmp  binary
+*.tim  binary
+*.raw  binary
+*.bin  binary

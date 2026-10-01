@@ -1,0 +1,11 @@
+---
+# PSY-Q SDK surface layer (src/psx)
+
+InheritParentConfig: true
+
+CheckOptions:
+  - { key: readability-identifier-naming.FunctionCase, value: CamelCase }
+  # psyq_* keeps the decompilation's renamed PSY-Q heap entry points greppable.
+  - { key: readability-identifier-naming.FunctionIgnoredRegexp,
+      value: '^func_[0-9A-Fa-f]+$|^psyq_[a-z0-9_]+$' }
+...
