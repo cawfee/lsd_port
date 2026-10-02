@@ -1,7 +1,7 @@
 #include <psx/kernel.h>
 
 #include "lsd/lsd_main.h"
-#include "lsd/memory/memory.h"
+#include "lsd/base/base.h"
 
 #define MEMORY_MANAGER_SIZE 0x166C00
 
